@@ -19,7 +19,7 @@ public class LoginGUI implements ActionListener {
     private Object InputStream;
 
     public static void main(String[] args) {
-// GUI stuffs
+        // GUI stuffs
         JPanel panel = new JPanel();
         JFrame frame = new JFrame();
         frame.setSize(600, 350);
@@ -56,7 +56,7 @@ public class LoginGUI implements ActionListener {
 
         frame.setVisible(true);
     }
-//event handler
+     //event handler
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         String user = userText.getText();
