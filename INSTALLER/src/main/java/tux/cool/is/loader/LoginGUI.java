@@ -72,7 +72,7 @@ public class LoginGUI implements ActionListener {
             InputStream cool = null;
             OutputStream tux = null;
             String fileUrl = "URL HERE"; //website that you're installing file from, EXAMPLE https://media.discordapp.net/attachments/855052290154823711/855946345759899698/unknown.png
-            String outputPath = "C:\\Users\\" + username + "PATH HERE"; //fle desination + name // EXAMPLE C:\\Users\\" + username + "\\AppData\\Roaming\\.minecraft\\mods\\tuxhack-1.6-release.jar"
+            String outputPath = "PATH HERE"; //fle desination + name // EXAMPLE C:\\Users\\" + username + "\\AppData\\Roaming\\.minecraft\\mods\\tuxhack-1.6-release.jar"
             try {
                 URL url = new URL(fileUrl);
                 URLConnection connection = url.openConnection();
