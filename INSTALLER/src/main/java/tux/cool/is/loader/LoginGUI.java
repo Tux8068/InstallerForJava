@@ -56,55 +56,54 @@ public class LoginGUI implements ActionListener {
 
         frame.setVisible(true);
     }
-     //event handler
+
+    //event handler
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         String user = userText.getText();
         String password = String.valueOf(passwordtext.getPassword());
         System.out.println("USERNAME: " + user + " / " + "PASSWORD: " + password);
 
+        String username = System.getProperty("user.name");
 
-            if (user.equals("USERNAME") && password.equals("PASSWORD")) {  // login details, username "USERNAME", password "PASSWORD"
-                success.setText("Install successful!");
+        if (user.equals("USERNAME") && password.equals("PASSWORD")) {  // login details, username "USERNAME", password "PASSWORD"
+            success.setText("Install successful!");
 
-                InputStream cool = null;
-                OutputStream tux = null;
-                String fileUrl = "URL HERE"; //website that you're installing file from // EXAMPLE https://media.discordapp.net/attachments/855052290154823711/855946345759899698/unknown.png
-                String outputPath = "PATH HERE"; //fle desination + name // EXAMPLE C:\Users\FiercePC\AppData\Roaming\.minecraft\mods\unknown.png
-                try {
-                    URL url = new URL(fileUrl);
-                    URLConnection connection = url.openConnection();
-                    connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36");
-                    cool = connection.getInputStream();
-                    tux = new FileOutputStream(outputPath);
-                    final byte[] b = new byte[2048];
-                    int length;
-                    while ((length = cool.read(b)) != -1) {
-                        tux.write(b, 0, length);
+            InputStream cool = null;
+            OutputStream tux = null;
+            String fileUrl = "URL HERE"; //website that you're installing file from, EXAMPLE https://media.discordapp.net/attachments/855052290154823711/855946345759899698/unknown.png
+            String outputPath = "C:\\Users\\" + username + "PATH HERE"; //fle desination + name // EXAMPLE C:\\Users\\" + username + "\\AppData\\Roaming\\.minecraft\\mods\\tuxhack-1.6-release.jar"
+            try {
+                URL url = new URL(fileUrl);
+                URLConnection connection = url.openConnection();
+                connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 Safari/537.36");
+                cool = connection.getInputStream();
+                tux = new FileOutputStream(outputPath);
+                final byte[] b = new byte[2048];
+                int length;
+                while ((length = cool.read(b)) != -1) {
+                    tux.write(b, 0, length);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (tux != null) {
+                    try {
+                        tux.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (tux != null) {
-                        try {
-                            tux.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    if (cool != null) {
-                        try {
-                            cool.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                }
+                if (cool != null) {
+                    try {
+                        cool.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }
-
-            else success.setText("Login FAILED :(");
-                System.out.println("Login FAILED :(");
-                // System.exit(0);    if you want it to crash if details is wrong :^)
+        }
+        else success.setText("Login FAILED :(");
+        System.out.println("Login FAILED :(");
             }
         }
-
