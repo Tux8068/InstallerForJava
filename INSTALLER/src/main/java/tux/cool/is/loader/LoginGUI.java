@@ -9,14 +9,15 @@ import java.net.URLConnection;
 
 public class LoginGUI implements ActionListener {
 
-    private static JLabel userlabel;
     private static JTextField userText;
-    private static JLabel passlabel;
+    private static JTextField pathtext;
     private static JPasswordField passwordtext;
-    private static JButton button;
     private static JLabel success;
-    private Object BufferedReader;
-    private Object InputStream;
+
+
+
+    public LoginGUI() {
+    }
 
     public static void main(String[] args) {
         // GUI stuffs
@@ -27,12 +28,20 @@ public class LoginGUI implements ActionListener {
         frame.add(panel);
         //username button
         panel.setLayout(null);
-        userlabel = new JLabel("USERNAME: ");
+        JLabel userlabel = new JLabel("Username: ");
         userlabel.setBounds(10, 20, 80, 25);
         panel.add(userlabel);
+        //path button
+        panel.setLayout(null);
+        JLabel pathlabel = new JLabel("Path: ");
+        pathlabel.setBounds(10, 80, 80, 25);
+        panel.add(pathlabel);
+        pathtext = new JTextField(20);
+        pathtext.setBounds(100, 80, 165, 25);
+        panel.add(pathtext);
         //password button
         panel.setLayout(null);
-        passlabel = new JLabel("PASSWORD: ");
+        JLabel passlabel = new JLabel("Password: ");
         passlabel.setBounds(10, 50, 80, 25);
         panel.add(passlabel);
 
@@ -44,8 +53,8 @@ public class LoginGUI implements ActionListener {
         passwordtext.setBounds(100, 50, 165, 25);
         panel.add(passwordtext);
 
-        button = new JButton("INSTALL: ");
-        button.setBounds(100, 80, 120, 25);
+        JButton button = new JButton("INSTALL");
+        button.setBounds(100, 130, 120, 25);
         button.addActionListener(new LoginGUI());
         panel.add(button);
 
@@ -64,15 +73,15 @@ public class LoginGUI implements ActionListener {
         String password = String.valueOf(passwordtext.getPassword());
         System.out.println("USERNAME: " + user + " / " + "PASSWORD: " + password);
 
-        String username = System.getProperty("user.name");
 
-        if (user.equals("USERNAME") && password.equals("PASSWORD")) {  // login details, username "USERNAME", password "PASSWORD"
+
+        if (user.equals("put user name here") && password.equals("put password here")) {  // login details, username "USERNAME", password "PASSWORD"
             success.setText("Install successful!");
 
             InputStream cool = null;
             OutputStream tux = null;
-            String fileUrl = "URL HERE"; //website that you're installing file from, EXAMPLE https://media.discordapp.net/attachments/855052290154823711/855946345759899698/unknown.png
-            String outputPath = "PATH HERE"; //fle desination + name // EXAMPLE C:\\Users\\" + username + "\\AppData\\Roaming\\.minecraft\\mods\\tuxhack-1.6-release.jar"
+            String fileUrl = "https://media.discordapp.net/attachments/855052290154823711/855946345759899698/unknown.png"; //website that you're installing file from, EXAMPLE https://media.discordapp.net/attachments/855052290154823711/855946345759899698/unknown.png
+            String outputPath = pathtext.getText(); //fle desination + name // EXAMPLE C:\\Users\\" + username + "\\AppData\\Roaming\\.minecraft\\mods\\tuxhack-1.6-release.jar"
             try {
                 URL url = new URL(fileUrl);
                 URLConnection connection = url.openConnection();
