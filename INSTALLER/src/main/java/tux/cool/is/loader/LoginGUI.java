@@ -1,22 +1,16 @@
 package tux.cool.is.loader;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.*;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.*;
 
 public class LoginGUI implements ActionListener {
 
-    private static JLabel userlabel;
     private static JTextField userText;
-    private static JLabel passlabel;
-    private static JPasswordField passwordtext;
-    private static JButton button;
-    private static JLabel success;
-    private Object BufferedReader;
-    private Object InputStream;
+    private static JPasswordField passwordText;
+    private static JLabel successLabel;
+
 
     public static void main(String[] args) {
         // GUI stuffs
@@ -27,12 +21,12 @@ public class LoginGUI implements ActionListener {
         frame.add(panel);
         //username button
         panel.setLayout(null);
-        userlabel = new JLabel("USERNAME: ");
+        JLabel userlabel = new JLabel("USERNAME: ");
         userlabel.setBounds(10, 20, 80, 25);
         panel.add(userlabel);
         //password button
         panel.setLayout(null);
-        passlabel = new JLabel("PASSWORD: ");
+        JLabel passlabel = new JLabel("PASSWORD: ");
         passlabel.setBounds(10, 50, 80, 25);
         panel.add(passlabel);
 
@@ -40,19 +34,24 @@ public class LoginGUI implements ActionListener {
         userText.setBounds(100, 20, 165, 25);
         panel.add(userText);
         //makes passwords hidden (********)
-        passwordtext = new JPasswordField();
-        passwordtext.setBounds(100, 50, 165, 25);
-        panel.add(passwordtext);
+        passwordText = new JPasswordField();
+        passwordText.setBounds(100, 50, 165, 25);
+        panel.add(passwordText);
 
-        button = new JButton("INSTALL: ");
+        JButton button = new JButton("INSTALL: ");
         button.setBounds(100, 80, 120, 25);
         button.addActionListener(new LoginGUI());
         panel.add(button);
+        button.addActionListener(onClick -> {
+            String user = userText.getText();
+            String password = passwordText.getText();
+            creatUserFile(user, password);
+        });
 
 
-        success = new JLabel("");
-        success.setBounds(10, 110, 300, 25);
-        panel.add(success);
+        successLabel = new JLabel("");
+        successLabel.setBounds(10, 110, 300, 25);
+        panel.add(successLabel);
 
         frame.setVisible(true);
     }
@@ -61,13 +60,13 @@ public class LoginGUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         String user = userText.getText();
-        String password = String.valueOf(passwordtext.getPassword());
+        String password = String.valueOf(passwordText.getPassword());
         System.out.println("USERNAME: " + user + " / " + "PASSWORD: " + password);
 
         String username = System.getProperty("user.name");
 
         if (user.equals("USERNAME") && password.equals("PASSWORD")) {  // login details, username "USERNAME", password "PASSWORD"
-            success.setText("Install successful!");
+            successLabel.setText("Install successLabelful!");
 
             InputStream cool = null;
             OutputStream tux = null;
@@ -102,8 +101,14 @@ public class LoginGUI implements ActionListener {
                     }
                 }
             }
-        }
-        else success.setText("Login FAILED :(");
+        } else successLabel.setText("Login FAILED :(");
         System.out.println("Login FAILED :(");
-            }
+    }
+    private static void creatUserFile(String username, String passwordText){
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("Info" + ".json"))) {
+            bufferedWriter.write(username + ", " + passwordText);
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
         }
+    }
+}
